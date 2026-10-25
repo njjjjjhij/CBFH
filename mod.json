@@ -1,0 +1,10 @@
+{
+  "geode": "v5.11.2",
+  "gd": { "android": "2.2081", "win": "2.2081" },
+  "id": "wmenu.cbfh",
+  "name": "W Menu - CBFH",
+  "version": "v1.0.0",
+  "developer": "WMenu",
+  "description": "A touch-friendly W menu with five configurable feature toggles and a CBFH frame setting.",
+  "tags": ["gameplay", "utility"]
+}
