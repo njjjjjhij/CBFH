@@ -1,0 +1,31 @@
+
+name: Build W Menu
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-android:
+    name: Build Android Geode Mod
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build with Geode SDK
+        id: build
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          target: Android64
+          sdk: given
+
+      - name: Upload compiled Geode file
+        uses: actions/upload-artifact@v4
+        with:
+          name: WMenu-Android64-geode
+          path: ${{ steps.build.outputs.build-output }}/*.geode
+          if-no-files-found: error
