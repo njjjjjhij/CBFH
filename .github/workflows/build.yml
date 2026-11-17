@@ -1,31 +1,30 @@
-
-name: Build W Menu
+name: Build CBFH
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build-android:
-    name: Build Android Geode Mod
-    runs-on: ubuntu-latest
-
+  build:
+    name: Windows x64 .geode
+    runs-on: windows-latest
     steps:
-      - name: Checkout source
+      - name: Check out source
         uses: actions/checkout@v4
 
-      - name: Build with Geode SDK
+      - name: Build mod
         id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          target: Android64
-          sdk: given
+          sdk: latest
+          target: Win64
+          build-config: Release
 
-      - name: Upload compiled Geode file
+      - name: Upload .geode
         uses: actions/upload-artifact@v4
         with:
-          name: WMenu-Android64-geode
-          path: ${{ steps.build.outputs.build-output }}/*.geode
+          name: CBFH-geode
+          path: ${{ steps.build.outputs.build-output }}
           if-no-files-found: error

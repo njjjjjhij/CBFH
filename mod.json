@@ -1,10 +1,18 @@
 {
-  "geode": "v5.11.2",
-  "gd": { "android": "2.2081", "win": "2.2081" },
-  "id": "wmenu.cbfh",
-  "name": "W Menu - CBFH",
-  "version": "v1.0.0",
-  "developer": "WMenu",
-  "description": "A touch-friendly W menu with five configurable feature toggles and a CBFH frame setting.",
-  "tags": ["gameplay", "utility"]
+	"geode": "v5.11.2",
+	"gd": {
+		"win": "2.2081"
+	},
+	"id": "wmenu.cbfh",
+	"name": "W Menu",
+	"version": "v1.0.0",
+	"developer": "WMenu",
+	"description": "A mobile-style click GUI with 5 modules. Open it with the W icon in the main menu or the pause menu. CBFH turns any click into a frame-perfect jump.",
+	"tags": [
+		"gameplay",
+		"utility"
+	],
+	"links": {
+		"community": "https://github.com/njjjjjhij/CBFH"
+	}
 }
