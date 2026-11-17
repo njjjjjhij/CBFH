@@ -44,8 +44,8 @@ class $modify(CbfhMenuLayer, MenuLayer) {
 
 // The W icon in the pause menu.
 class $modify(CbfhPauseLayer, PauseLayer) {
-	bool init() {
-		if (!PauseLayer::init()) return false;
+	bool init(bool unfocused) {
+		if (!PauseLayer::init(unfocused)) return false;
 		addWButton(this, this, menu_selector(CbfhPauseLayer::onOpenClickGui));
 		return true;
 	}

@@ -43,6 +43,20 @@ ccColor3B c3(ccColor4F c) {
 	return ccc3((GLubyte)(c.r * 255.f), (GLubyte)(c.g * 255.f), (GLubyte)(c.b * 255.f));
 }
 
+// cocos2d 2.2 has no drawSolidRect, so filled rectangles go through drawPolygon.
+void fillRect(CCDrawNode* node, CCRect rect, ccColor4F fill) {
+	if (!node || rect.size.width <= 0.f || rect.size.height <= 0.f) return;
+
+	CCPoint verts[4] = {
+		{ rect.origin.x, rect.origin.y },
+		{ rect.origin.x + rect.size.width, rect.origin.y },
+		{ rect.origin.x + rect.size.width, rect.origin.y + rect.size.height },
+		{ rect.origin.x, rect.origin.y + rect.size.height },
+	};
+
+	node->drawPolygon(verts, 4, fill, 0.f, fill);
+}
+
 void roundRect(CCDrawNode* node, CCRect rect, float radius, ccColor4F fill) {
 	if (!node || rect.size.width <= 0.f || rect.size.height <= 0.f) return;
 
@@ -52,8 +66,8 @@ void roundRect(CCDrawNode* node, CCRect rect, float radius, ccColor4F fill) {
 	float w = rect.size.width;
 	float h = rect.size.height;
 
-	node->drawSolidRect({ x + r, y }, { x + w - r, y + h }, fill);
-	node->drawSolidRect({ x, y + r }, { x + w, y + h - r }, fill);
+	fillRect(node, { x + r, y, w - 2.f * r, h }, fill);
+	fillRect(node, { x, y + r, w, h - 2.f * r }, fill);
 
 	if (r > 0.5f) {
 		node->drawDot({ x + r, y + r }, r, fill);
@@ -308,8 +322,8 @@ void ClickGui::buildPanel() {
 	auto body = CCDrawNode::create();
 	roundRect(body, { 0.f, 0.f, width, height }, 17.f, C_STROKE);
 	roundRect(body, { 1.f, 1.f, width - 2.f, height - 2.f }, 16.f, C_BG);
-	body->drawSolidRect({ 16.f, height - 7.f }, { width - 16.f, height - 5.f }, C_ACCENT);
-	body->drawSolidRect({ 1.f, height - headH }, { width - 1.f, height - headH + 1.f }, C_STROKE);
+	fillRect(body, { 16.f, height - 7.f, width - 32.f, 2.f }, C_ACCENT);
+	fillRect(body, { 1.f, height - headH, width - 2.f, 1.f }, C_STROKE);
 	panel->addChild(body, 0);
 
 	auto title = CCLabelBMFont::create("W MENU", "bigFont.fnt");
@@ -367,7 +381,7 @@ void ClickGui::buildPanel() {
 		auto draw = CCDrawNode::create();
 		roundRect(draw, { ox, oy, rowW, rowH }, 10.f, on ? C_ROW_ON : C_ROW);
 		if (on) {
-			draw->drawSolidRect({ ox + 5.f, oy + 7.f }, { ox + 7.f, oy + rowH - 7.f }, C_ACCENT);
+			fillRect(draw, { ox + 5.f, oy + 7.f, 2.f, rowH - 14.f }, C_ACCENT);
 		}
 		holder->addChild(draw);
 
