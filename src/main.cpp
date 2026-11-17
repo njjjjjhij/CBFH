@@ -42,12 +42,12 @@ class $modify(CbfhMenuLayer, MenuLayer) {
 	}
 };
 
-// The W icon in the pause menu.
+// The W icon in the pause menu. PauseLayer::init is inline in the 2.2081
+// bindings and cannot be hooked, so the button goes in through customSetup.
 class $modify(CbfhPauseLayer, PauseLayer) {
-	bool init(bool unfocused) {
-		if (!PauseLayer::init(unfocused)) return false;
+	void customSetup() {
+		PauseLayer::customSetup();
 		addWButton(this, this, menu_selector(CbfhPauseLayer::onOpenClickGui));
-		return true;
 	}
 
 	void onOpenClickGui(CCObject*) {
